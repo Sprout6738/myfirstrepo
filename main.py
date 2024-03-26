@@ -1,54 +1,21 @@
-import turtle
+import discord
+from discord.ext import commands
 
-# Create a turtle object
-t = turtle.Turtle()
+intents = discord.Intents.default()
+intents.message_content = True
 
-# Set turtle speed and pen color
-t.speed(0)  # Set the speed to the maximum
-t.pensize(5)  # Set the pen size
+bot = commands.Bot(command_prefix='$', intents=intents)
 
-# Function to draw a square with a given side length
-def draw_square(side_length):
-    for _ in range(4):
-        t.forward(side_length)
-        t.right(90)
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
 
-# Function to draw the creeper face
-def draw_creeper_face():
-    # Draw the outer square
-    t.fillcolor("lime")
-    t.begin_fill()
-    draw_square(100)
-    t.end_fill()
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hi! I am a bot {bot.user}!')
 
-    # Draw the eyes
-    t.penup()
-    t.goto(30, 60)  # Position the turtle at the right eye
-    t.pendown()
-    t.fillcolor("black")
-    t.begin_fill()
-    draw_square(20)
-    t.end_fill()
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
 
-    t.penup()
-    t.goto(-30, 60)  # Position the turtle at the left eye
-    t.pendown()
-    t.begin_fill()
-    draw_square(20)
-    t.end_fill()
-
-    # Draw the mouth
-    t.penup()
-    t.goto(-30, 30)  # Position the turtle at the mouth
-    t.pendown()
-    t.fillcolor("black")
-    t.begin_fill()
-    draw_square(60)
-    t.end_fill()
-
-# Draw the creeper face
-draw_creeper_face()
-
-# Hide the turtle and keep the window open
-t.hideturtle()
-turtle.done()
+bot.run("FILL UP TOKEN HERE")
